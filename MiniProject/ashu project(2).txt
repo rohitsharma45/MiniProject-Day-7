@@ -1,0 +1,224 @@
+public int addProgramOffered(miniProjectbean bean)
+{
+	int  result=0;
+	
+		       try
+		       {
+				conn= dbutil.getConnection();
+				String insertQuery= "insert into Programs_Offered values(?,?,?,?,?)";
+				PreparedStatement ps= conn.prepareStatement(insertQuery);
+				ps.setString(1, bean.setProgramName());
+				ps.setString(2, bean.setDiscription());
+				ps.setString(3, bean.setApplicantEligibility);
+				ps.setString(4, bean.setDuration);
+				ps.setString(5, bean.setDegreeCertificate());
+		
+				result=ps.executeUpdate();
+			
+			}
+			catch(IOException e)
+			{
+				System.out.println(e.getMessage());
+			}
+		
+			catch(SQLException e)
+			{
+				System.out.println(e.getMessage());
+			}
+	return result;
+}
+public int deleteProgramOffered(int programName)
+{
+		Connection conn= null;
+		try{
+			conn= dbutil.getConnection();
+			String sql = "delete from Programs_Offered where programName='?'";
+			PreparedStatement ps= conn.prepareStatement(insertQuery);
+			ps.setString(1,programName);
+			result=ps.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			logger.error("Exception Occured");
+			System.out.println(e.getMessage());
+		}
+		return result;
+
+}
+
+public int addScheduleProgram(bean)
+{
+int  result=0;
+	
+		       try
+		       {
+				conn= dbutil.getConnection();
+				String insertQuery= "insert into Programs_Scheduled values(?,?,?,?,?,?)";
+				PreparedStatement ps= conn.prepareStatement(insertQuery);
+				ps.setString(1, bean.setProgramName());
+				ps.setString(2, bean.setProgram());
+				ps.setString(3, bean.setProgramLocation());
+				ps.setString(4, bean.setProgramStartDate());
+				ps.setString(5, bean.setProgramEndDate());
+				ps.setString(6, bean.setProgramSession());
+				result=ps.executeUpdate();
+			
+			}
+			catch(IOException e)
+			{
+				System.out.println(e.getMessage());
+			}
+		
+			catch(SQLException e)
+			{
+				System.out.println(e.getMessage());
+			}
+				return result; 
+
+}
+public int updateDetail(bean)
+{
+int  result=0;
+	
+		       try
+		       {
+				conn= dbutil.getConnection();
+				String insertQuery= "update Programs_Offered set ProgramName=?, description=?,applicant_eligibility =?,duration=?,degree_certificate_offered=?";
+				PreparedStatement ps= conn.prepareStatement(insertQuery);
+				ps.setString(1, bean.setProgramName());
+				ps.setString(2, bean.setDiscription());
+				ps.setString(3, bean.setApplicantEligibility);
+				ps.setString(4, bean.setDuration);
+				ps.setString(5, bean.setDegreeCertificate());
+				result=ps.executeUpdate();
+			
+			}
+			catch(IOException e)
+			{
+				System.out.println(e.getMessage());
+			}
+		
+			catch(SQLException e)
+			{
+				System.out.println(e.getMessage());
+			}
+				return result; 
+
+}
+
+public int deleteProgramSchedule(int programScheduleId)
+{
+		Connection conn= null;
+		try{
+			conn= dbutil.getConnection();
+			String sql = "delete from Programs_Scheduled where Scheduled_program_id ='?'";
+			PreparedStatement ps= conn.prepareStatement(insertQuery);
+			ps.setString(1,programScheduleId);
+			result=ps.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			logger.error("Exception Occured");
+			System.out.println(e.getMessage());
+		}
+		return result;
+
+}
+
+
+
+	System.out.println("Admin");
+	System.out.println("1.Add Program");
+	System.out.println("2.Delete Program");
+	System.out.println("3.Update Program");
+	System.out.println("4.Add Program Schedule");
+	System.out.println("4.Delete Program Schedule");
+	System.out.println("Enter Your Choice);
+	choice=sc.nextInt();
+	switch(choice)
+	{
+		case 1:
+			System.out.println("Enter the Proagram name:");
+			int programName=sc.nextInt();
+			System.out.println("Enter the Proagram description:");
+			int programDesc=sc.nextInt();
+			System.out.println("Enter the Applicant Eligibility");
+			int programEligibilty=sc.nextInt();
+			System.out.println("Enter the Program Duration");
+			int programDuration=sc.nextInt();
+			System.out.println("Enter the degree certificate offered");
+			int degreeCertificate =sc.nextInt();
+			list=service.addProgramOffered(bean);
+			if(result==1)
+			System.out.println("updated");
+			else
+			System.out.println("Not Updated");
+			break;
+		case 2:
+			System.out.println("Enter the Program Name:");
+			int programName=sc.nextInt();
+			int res=service.deleteProgramOffered(programName);
+			
+			if(res==1)
+			{
+			System.out.println("Program Deleted");
+			else
+			System.out.println("Error");
+			}
+			break;
+		case 3:
+			System.out.println("Enter the updated details about the program);
+			System.out.println("Enter the Proagram name:");
+			int programName=sc.next();
+			System.out.println("Enter the Proagram description:");
+			int programDesc=sc.nextInt();
+			System.out.println("Enter the Applicant Eligibility");
+			int programEligibilty=sc.nextInt();
+			System.out.println("Enter the Program Duration");
+			int programDuration=sc.nextInt();
+			System.out.println("Enter the degree certificate offered");
+			int degreeCertificate =sc.nextInt();
+			service.updateDetail(bean);
+			break;
+
+		case 4:
+			System.out.println("Enter the Proagram Schedule Id :");
+			int programScheduleId=sc.nextInt();
+			System.out.println("Enter the Proagram Name:");
+			int programName=sc.nextInt();
+			System.out.println("Enter the Location");
+			int programLocation=sc.nextInt();
+			System.out.println("Enter the Program Start Date");
+			int programStartDate=sc.nextInt();
+			System.out.println("Enter the program End Date");
+			int programEndDate=sc.nextInt();
+			System.out.println("Enter the program Session Per Week");
+			int programSession=sc.nextInt();
+			result=service.addScheduleProgram(bean);
+			if(result==1)
+			System.out.println("updated");
+			else
+			System.out.println("Not Updated");
+			break;
+		
+		case 5:
+			System.out.println("Enter the Program Schedule Id to be Deleted");
+			int programScheduleId=sc.nextInt();
+			int res=service.deleteProgramSchedule(programScheduleId);
+			if(res==1)
+			{
+			System.out.println("Program Schedule Deleted");
+			else
+			System.out.println("Error");
+			}
+			break;
+			
+			
+			
+			
+			
+			
+
+			
+			
+		
